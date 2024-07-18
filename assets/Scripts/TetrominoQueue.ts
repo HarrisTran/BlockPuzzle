@@ -5,36 +5,34 @@ const { ccclass, property } = _decorator;
 
 @ccclass('TetrominoQueue')
 export class TetrominoQueue extends Component {
-    @property({ group: { name: "Components", id: "1", displayOrder: 1 }, type: [Node] })
-    private pieceNodes: Node[] = [];
+    @property({ group: { name: "Components", id: "1", displayOrder: 1 }, type: [TetrominoPiece] })
+    private piece: TetrominoPiece[] = [];
 
-    private _pieces: TetrominoPiece[];
 
     protected onLoad(): void {
-        this._pieces = this.pieceNodes.map(v => {
-            return v.getComponent(TetrominoPiece);
-        });
     }
 
+
     public initialize(cellSize: number){
-        this._pieces.map(v => v.setSize(cellSize));
+        this.piece.map(v => v.setSize(cellSize));
     }
 
     public refreshAllPieces()
     {
         let piecesToSet = [...PredefinedTetrominoPieces.values()]
        
-        for (let i = 0; i < this.pieceNodes.length; ++i)
+        for (let i = 0; i < this.piece.length; ++i)
         {
-            this.refreshPiece(i, piecesToSet[i]);
+            this.refreshPiece(i, piecesToSet[i+6]);
         }
     }
 
     public refreshPiece(i: number, data: TetrominoData)
     {
-        let piece = this._pieces[i];
+        let piece = this.piece[i];
         piece.resetPosition();
         piece.setData(data);
+        piece.node.active = true;
     }
 }
 

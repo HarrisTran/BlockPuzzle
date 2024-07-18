@@ -1,7 +1,8 @@
-import { _decorator, Camera, Canvas, Component, Director, director, game, Node, NodePool, UITransform } from 'cc';
-import { PuzzlePlayerControl } from './PuzzlePlayerControl';
+import { _decorator, Camera, Canvas, Component, Director, director, game, instantiate, Node, NodePool, Prefab, UITransform } from 'cc';
+import { ControlMode, PuzzlePlayerControl } from './PuzzlePlayerControl';
 import { PuzzleGrid } from './PuzzleGrid';
 import { TetrominoQueue } from './TetrominoQueue';
+import { PieceBlock } from './PieceBlock';
 const { ccclass, property } = _decorator;
 enum PuzzleGameState
 {
@@ -23,22 +24,26 @@ export class PuzzleGameManager extends Component {
     }
 
     @property(Canvas) public canvas: Canvas = null;
+    @property(Camera) public camera: Camera = null;
     @property(PuzzlePlayerControl) public playerControl: PuzzlePlayerControl = null;
     @property(PuzzleGrid) public puzzleGrid: PuzzleGrid = null;
     @property(TetrominoQueue) public tetrominoQueue: TetrominoQueue = null;
+    @property(Prefab) public pieceBlock: Prefab = null;
 
     private _state: PuzzleGameState;
-    public camera : Camera;
-    public pieceNodePool : NodePool;
+    // public pieceNodePool : NodePool;
 
     protected onLoad(): void {
         PuzzleGameManager._instance = this;
-        this.camera = this.canvas.cameraComponent;
         this._state = PuzzleGameState.NONE;
     }
 
     protected start(): void {
         this.setState(PuzzleGameState.INIT);
+    }
+
+    public getPieceBlock(){
+        return instantiate(this.pieceBlock).getComponent(PieceBlock);
     }
 
     public setState(newState: PuzzleGameState){
@@ -47,18 +52,19 @@ export class PuzzleGameManager extends Component {
             console.log("Puzzle Game State requested switched to " + PuzzleGameState[newState]);
             if(newState == PuzzleGameState.INIT){
                 this.puzzleGrid.calculateGridToFitScreenSize(this.canvas.node.getComponent(UITransform).width);
-                this.pieceNodePool = new NodePool();
+                // this.pieceNodePool = new NodePool();
+                this.tetrominoQueue.initialize(this.puzzleGrid.cellPixelSize);
                 this.playerControl.initialize();
                 this.setState(PuzzleGameState.START_GAME);
             }
             else if(newState == PuzzleGameState.START_GAME){
                 this.puzzleGrid.clear();
                 this.puzzleGrid.activate();
-                this.tetrominoQueue
-
+                this.tetrominoQueue.refreshAllPieces();
+                this.setState(PuzzleGameState.IN_GAME);
             }
             else if(newState == PuzzleGameState.IN_GAME){
-
+                this.playerControl.setControlMode(ControlMode.NORMAL);
             }
             else if(newState == PuzzleGameState.PAUSE_GAME){
 
