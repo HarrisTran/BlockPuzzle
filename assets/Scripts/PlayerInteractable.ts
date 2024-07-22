@@ -210,7 +210,6 @@ export class PlayerInteractable extends Component
     {
         if (this.registerClick)
         {
-            console.log("Clicked " + this.node.name);
             EventHandler.emitEvents(this.onClickEvents, event);
         }
     }
@@ -219,7 +218,6 @@ export class PlayerInteractable extends Component
     {
         if (this.registerMove)
         {
-            console.log("Move started " + this.node.name);
             EventHandler.emitEvents(this.onMoveStartEvents, event);
         }
     }
@@ -228,7 +226,6 @@ export class PlayerInteractable extends Component
     {
         if (this.registerMove)
         {
-            console.log("Moving " + this.node.name);
             EventHandler.emitEvents(this.onMoveEvents, event);
         }
     }
@@ -237,7 +234,6 @@ export class PlayerInteractable extends Component
     {
         if (this.registerMove)
         {
-            console.log("Move Ended " + this.node.name);
             EventHandler.emitEvents(this.onMoveEndEvents, event);
         }
     }
@@ -246,7 +242,6 @@ export class PlayerInteractable extends Component
     {
         if (this.registerLongClick)
         {
-            console.log("Long Clicked " + this.node.name);
             EventHandler.emitEvents(this.onLongClickEvents, event);
         }
     }

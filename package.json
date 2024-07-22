@@ -3,5 +3,8 @@
   "uuid": "c6d93267-cda5-473e-a535-062f0f91417b",
   "creator": {
     "version": "3.8.3"
+  },
+  "dependencies": {
+    "random-item": "^4.0.1"
   }
 }

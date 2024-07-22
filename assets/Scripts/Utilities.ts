@@ -59,3 +59,7 @@ export function isVec3InBounds(position: Vec3, bound: Bound) {
 export function isBetween(value: number, bound1: number, bound2: number): boolean {
     return Math.min(bound1, bound2) <= value && value <= Math.max(bound1, bound2);
 }
+
+export function delay(delay: number){
+    return new Promise((resolve) => setTimeout(resolve, delay*1000));
+}

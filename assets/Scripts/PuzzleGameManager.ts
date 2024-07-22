@@ -3,6 +3,8 @@ import { ControlMode, PuzzlePlayerControl } from './PuzzlePlayerControl';
 import { PuzzleGrid } from './PuzzleGrid';
 import { TetrominoQueue } from './TetrominoQueue';
 import { PieceBlock } from './PieceBlock';
+import { GameUI } from './UI/GameUI';
+import { delay } from './Utilities';
 const { ccclass, property } = _decorator;
 enum PuzzleGameState
 {
@@ -26,11 +28,14 @@ export class PuzzleGameManager extends Component {
     @property(Canvas) public canvas: Canvas = null;
     @property(Camera) public camera: Camera = null;
     @property(PuzzlePlayerControl) public playerControl: PuzzlePlayerControl = null;
+    @property(GameUI) public gameUI: GameUI = null;
     @property(PuzzleGrid) public puzzleGrid: PuzzleGrid = null;
     @property(TetrominoQueue) public tetrominoQueue: TetrominoQueue = null;
     @property(Prefab) public pieceBlock: Prefab = null;
 
     private _state: PuzzleGameState;
+    private _score: number = 0;
+
     // public pieceNodePool : NodePool;
 
     protected onLoad(): void {
@@ -64,19 +69,49 @@ export class PuzzleGameManager extends Component {
                 this.setState(PuzzleGameState.IN_GAME);
             }
             else if(newState == PuzzleGameState.IN_GAME){
+                this.gameUI.onGameStart();
                 this.playerControl.setControlMode(ControlMode.NORMAL);
             }
             else if(newState == PuzzleGameState.PAUSE_GAME){
 
             }
             else if(newState == PuzzleGameState.GAME_OVER){
-
+                this.gameUI.onGameOver();
             }
             else if(newState == PuzzleGameState.CONCLUDE_GAME){
                 
             }
         }
     }
+
+    async onPlayerPlayedAPiece() {
+        if (this.tetrominoQueue.shouldBeRefreshed()) {
+            setTimeout(() => this.tetrominoQueue.refreshAllPieces(), 200);
+        }
+        else {
+            if (!this.checkGridCanStillPlay()) {
+                await delay(2);
+                this.setState(PuzzleGameState.GAME_OVER)
+            };
+        }
+    }
+
+    checkGridCanStillPlay() {
+        for(let pie of PuzzleGameManager.instance.tetrominoQueue.getActivePieces()){
+            let check = PuzzleGameManager.instance.puzzleGrid.checkCanAttachPieceInGrid(pie);
+            if(check) return true;
+        }
+        return false;
+    }
+
+    addScore(value: number) {
+        if(this._state == PuzzleGameState.IN_GAME){
+            this._score += value;
+            
+            this.gameUI.setScore(Math.floor(this._score));
+        }
+    }
+
 }
 
 

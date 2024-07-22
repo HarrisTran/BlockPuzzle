@@ -1,29 +1,41 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, CCFloat, Component, Node, Size, SpriteFrame, UITransform } from 'cc';
 import { PredefinedTetrominoPieces } from './TetrominoDefinedData';
+import randomItem from 'random-item';
 import { TetrominoData, TetrominoPiece } from './TetrominoPiece';
 const { ccclass, property } = _decorator;
 
 @ccclass('TetrominoQueue')
 export class TetrominoQueue extends Component {
     @property({ group: { name: "Components", id: "1", displayOrder: 1 }, type: [TetrominoPiece] })
-    private piece: TetrominoPiece[] = [];
+    public piece: TetrominoPiece[] = [];
+    @property({group: { name: "Components", id: "1", displayOrder: 1 }, type:[SpriteFrame]})
+    private spriteFrameList: SpriteFrame[] = [];
+    @property({ group: { name: "Params", id: "1", displayOrder: 2 }, type: CCFloat })
+    private desiredBoxWidth: number;
+    @property({ group: { name: "Params", id: "1", displayOrder: 2 }, type: CCFloat })
+    private desiredBoxHeight: number;
 
-
-    protected onLoad(): void {
+    public shouldBeRefreshed(){
+        return this.piece.every(pie => pie.node.active == false);
     }
 
+    public getActivePieces(){
+        return this.piece.filter(pie => pie.node.active == true);
+    }
 
     public initialize(cellSize: number){
+        let ratio = this.desiredBoxHeight / this.desiredBoxWidth;
+        let boxWidth = 1080;
+        this.node.getComponent(UITransform).contentSize = new Size(boxWidth, ratio * boxWidth);
         this.piece.map(v => v.setSize(cellSize));
     }
 
     public refreshAllPieces()
     {
-        let piecesToSet = [...PredefinedTetrominoPieces.values()]
-       
+        let piecesToSet = [...PredefinedTetrominoPieces]
         for (let i = 0; i < this.piece.length; ++i)
         {
-            this.refreshPiece(i, piecesToSet[i+6]);
+            this.refreshPiece(i, randomItem(piecesToSet));
         }
     }
 
@@ -31,6 +43,7 @@ export class TetrominoQueue extends Component {
     {
         let piece = this.piece[i];
         piece.resetPosition();
+        piece.randomizeSprite(randomItem(this.spriteFrameList));
         piece.setData(data);
         piece.node.active = true;
     }
