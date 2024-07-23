@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "my-sheets-api-project",
+  "private_key_id": "b3e6cd32bd6921914947339dd2d86f4274d0345d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCU17dXDZiilAh6\nXfHmS5zXSYtX7DY30V5h9n/Vh2xoLYoJcsZjPQuzWWvU6aiZ5OiAnt99J01aO2kH\nFJTZ8RPrqk3GOR2xgSju4WkQxbRuFQCqS2+Ev3DSX+yFCBs3mjv9WipSnhWuhg9P\nwtBKgNEnuMlSWpeUBLJoE+7u4+P2fTJfvXw7c5/qCf9A+o1RrPu1syFJZwBKIx8v\n099rDP7XmV8OU07r0MCGrc/COpBwvUfJHlYN8CNd56NpO6sX3Mb/4iWTv26BfNzn\nWFg0gZRSWgrQ5FgXGLca/NujEjBQ4pPQ9TiCDD7runErH63WBW9fpQV1/nGHWZnx\nVXfoj5cFAgMBAAECggEAAOLcr4BAI5b+4Ami4Anj7qNuJu3GsBXHSLfdMJdoyvaM\n5F90GDTGiLKGLnizVkDIntFsOX8BmkFYduBMvnfGgo9GC2+5rNa84y4aOR8XVKt0\nuzJjD0iinukkkvFqKaAPCqezTWs77BdH2o6iZ6zuKsCSQoE8aKHlFQgqBGDSI3Hp\nVQdkJKG6ehuNsGuWrJ013zr//tNoeFzf5K4L365/HuIIpRJc2OZncK2RKxM/UG0i\nQPj/mshBjfk5wfqsiN5P74oGtcWxQ6EYB5xzi26z+xakkwAovYLIMAKoTEsTWF1T\nM0NlAwfS5vZsN5itqjJpyoNqe2A1B2nK9Rs1GY9/uQKBgQDIYsD3tvypWlDV/Jq+\ncb2S8Q7jrCsvJ7jIH7lDlIWpLPzotxO/Ba3YNN6B7Q25kj3HA0/T44k85YRYUVfZ\nL8MujHnV1hP7GoE639GCh9XmPmkDQhBF+XVsAQGULC1/m9dQv40y+AK056ipIjz6\nAPYLiqGEBR99r0mTvaiZf/6tDQKBgQC+Jt2a+SZI4T1nd2cp2KFA29WSdE9cIzEJ\nxfznbfftjkxdjyNUrduuecon/xL1z1CQ54nu+34GYGcdUyDFnR2IcBRCrbbfNUAN\nh2uv71G514mETUR3qSHOMv8IE05pO8Hm9T3suuVMVqHRyl78hUbM6IF1XfnAGTRk\n48xfD9bD2QKBgGPB1fL8I9hjX+7HrHm2wfuPCiyJn44AJltqf56HJ+tKvDVWPvxP\n5XXHDCZ+TuDdTufuXCVOFxo74KDfDe7PekmIIXc09gmB7mfS2Mg0u2W+GCVJFDTh\ntXUpIxIS1Cu893n5gl+nXCGXWj2pD9Yd+F9SiongywaU5von5vFT6QNZAoGAd7Iz\ncShA50ORyZ2p/Pd2mkNHr4czpYYpikNtLalVld4rSAGgdd9zF+NmU8MHBmDYED8P\n3rXE4PKyNg1r5bk/K/GRb1+2a88zYNDMAtWdFmUNFZEl9kUrGIeVblno0+lf56ic\nsHX9fQ5TkqHXJRIoPThmtaDQZBH5n0CeF4D66hECgYEAxXX4BXcDzXIoDjmBuxSN\nJzkei1HO5HQuMEagrOcSEShg3FqBE5MKU0jro8uL7oIArz18gGNz/3s+/liVNaOs\njMSJ+g7IxjXk4MEppMDGvAWIkejrm6qmGzvhI7eK0AnDRqz0rOolGWTswLHZE7Xt\nW+VlNNVZmZyDBYrPs2VW71A=\n-----END PRIVATE KEY-----\n",
+  "client_email": "game-design-sheet@my-sheets-api-project.iam.gserviceaccount.com",
+  "client_id": "100928776467985956862",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/game-design-sheet%40my-sheets-api-project.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

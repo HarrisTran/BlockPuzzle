@@ -1,10 +1,11 @@
-import { _decorator, Camera, Canvas, Component, Director, director, game, instantiate, Node, NodePool, Prefab, UITransform } from 'cc';
+import { _decorator, Camera, Canvas, Component, director, Director, instantiate, Prefab, UITransform } from 'cc';
 import { ControlMode, PuzzlePlayerControl } from './PuzzlePlayerControl';
 import { PuzzleGrid } from './PuzzleGrid';
 import { TetrominoQueue } from './TetrominoQueue';
 import { PieceBlock } from './PieceBlock';
 import { GameUI } from './UI/GameUI';
 import { delay } from './Utilities';
+import { DataGameManager } from './DataGameManager';
 const { ccclass, property } = _decorator;
 enum PuzzleGameState
 {
@@ -33,12 +34,24 @@ export class PuzzleGameManager extends Component {
     @property(TetrominoQueue) public tetrominoQueue: TetrominoQueue = null;
     @property(Prefab) public pieceBlock: Prefab = null;
 
+    public dataSource: DataGameManager;
+
     private _state: PuzzleGameState;
     private _score: number = 0;
+    private _currentLevel : number = 0;
+
+    public updateCurrentLevel(){
+        this._currentLevel++;
+    }
+
+    public get currentLevel(){
+        return this._currentLevel;
+    }
 
     // public pieceNodePool : NodePool;
 
     protected onLoad(): void {
+        this.dataSource = new DataGameManager();
         PuzzleGameManager._instance = this;
         this._state = PuzzleGameState.NONE;
     }

@@ -1,8 +1,6 @@
 import { _decorator, Component, EventTouch, Node, Size, Sprite, SpriteFrame, UITransform, v3, Vec2, Vec3 } from 'cc';
 import { PuzzleGameManager } from './PuzzleGameManager';
 import { PieceBlock } from './PieceBlock';
-import { TetrominoPlayerInteractable } from './TetrominoPlayerInteractable';
-import randomItem from 'random-item';
 const { ccclass, property } = _decorator;
 
 export class TetrominoData {
@@ -10,28 +8,21 @@ export class TetrominoData {
     grid: {
         size: [number, number];
         data: number[];
-    }[];
-    selected: number;
+    };
+    //selected: number;
 
     public static getSize(data: TetrominoData): [number, number] {
-        return data.grid[data.selected].size;
+        return data.grid.size;
     }
 
     public static getData(data: TetrominoData): number[] {
-        return data.grid[data.selected].data;
+        return data.grid.data;
     }
 
     public static clone(data: TetrominoData) {
         return Object.assign({}, data);
     }
 
-    public static getAllRotations(data: TetrominoData): TetrominoData[] {
-        return data.grid.map((v, i, a) => {
-            let clone = TetrominoData.clone(data);
-            clone.selected = i;
-            return clone;
-        });
-    }
 }
 
 @ccclass('TetrominoPiece')

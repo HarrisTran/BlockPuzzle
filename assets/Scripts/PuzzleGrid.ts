@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, CCInteger, Component, Layout, Node, Rect, Size, Vec2, Vec3 } from 'cc';
+import { _decorator, CCFloat,Component, Layout, Size,Vec3 } from 'cc';
 import { PieceBlock } from './PieceBlock';
 import { PuzzleGridCell } from './PuzzleGridCell';
 import { Bound, getWorldBound, isBetween, mergeBounds } from './Utilities';
