@@ -9,7 +9,6 @@ export class TetrominoData {
         size: [number, number];
         data: number[];
     };
-    //selected: number;
 
     public static getSize(data: TetrominoData): [number, number] {
         return data.grid.size;
@@ -59,15 +58,17 @@ export class TetrominoPiece extends Component {
     public onMoveStart(event: EventTouch): void {
         this.node.worldScale = Vec3.ONE;
 
-        let screenPos = event.getLocation();
-        let pos = PuzzleGameManager.instance.camera.screenToWorld(new Vec3(screenPos.x, screenPos.y));
-        this.appearance.node.position = v3(0,this._cellSize.y * 3/2,0);
+        let screenPos = event.getUILocation();
+        //let pos = PuzzleGameManager.instance.camera.screenToWorld(new Vec3(screenPos.x, screenPos.y));
+        let pos = v3(screenPos.x,screenPos.y, 0)
+        this.appearance.node.position = v3(0,this._cellSize.y * 2, 0);
         this.node.worldPosition = pos;
     }
 
     public onMove(event: EventTouch): void {
-        let screenPos = event.getLocation();
-        let pos = PuzzleGameManager.instance.camera.screenToWorld(new Vec3(screenPos.x, screenPos.y));
+        let screenPos = event.getUILocation();
+        //let pos = PuzzleGameManager.instance.camera.screenToWorld(new Vec3(screenPos.x, screenPos.y));
+        let pos = v3(screenPos.x,screenPos.y, 0)
         this.node.worldPosition = pos;
 
         // Show preview

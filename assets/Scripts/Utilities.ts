@@ -63,3 +63,8 @@ export function isBetween(value: number, bound1: number, bound2: number): boolea
 export function delay(delay: number){
     return new Promise((resolve) => setTimeout(resolve, delay*1000));
 }
+
+export function randomInList<T>(list: T[]) {
+    if (list.length === 1) return list[0];
+    return list[Math.floor(Math.random() * list.length)];
+  }

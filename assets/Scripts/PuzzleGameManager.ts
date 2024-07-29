@@ -1,4 +1,4 @@
-import { _decorator, Camera, Canvas, Component, director, Director, instantiate, Prefab, UITransform } from 'cc';
+import { _decorator, Camera, Canvas, Component, game, instantiate, JsonAsset, Prefab, UITransform } from 'cc';
 import { ControlMode, PuzzlePlayerControl } from './PuzzlePlayerControl';
 import { PuzzleGrid } from './PuzzleGrid';
 import { TetrominoQueue } from './TetrominoQueue';
@@ -7,7 +7,7 @@ import { GameUI } from './UI/GameUI';
 import { delay } from './Utilities';
 import { DataGameManager } from './DataGameManager';
 const { ccclass, property } = _decorator;
-enum PuzzleGameState
+export enum PuzzleGameState
 {
     NONE = 0,               // Invalid, begin state
     INIT,                   // Initialize things (board, controls, etc.)
@@ -33,6 +33,8 @@ export class PuzzleGameManager extends Component {
     @property(PuzzleGrid) public puzzleGrid: PuzzleGrid = null;
     @property(TetrominoQueue) public tetrominoQueue: TetrominoQueue = null;
     @property(Prefab) public pieceBlock: Prefab = null;
+    @property(JsonAsset) public BlockDataJson: JsonAsset = null;
+    @property(JsonAsset) public EndlessDataJson: JsonAsset = null;
 
     public dataSource: DataGameManager;
 
@@ -51,7 +53,7 @@ export class PuzzleGameManager extends Component {
     // public pieceNodePool : NodePool;
 
     protected onLoad(): void {
-        this.dataSource = new DataGameManager();
+        this.dataSource = new DataGameManager(this.BlockDataJson,this.EndlessDataJson);
         PuzzleGameManager._instance = this;
         this._state = PuzzleGameState.NONE;
     }

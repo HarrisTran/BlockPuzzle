@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, Component, EventHandler, EventTouch, Node } from 'cc';
+import { _decorator, CCFloat, Component, EventHandler, EventTouch, Input, Node } from 'cc';
 const { ccclass, property } = _decorator;
 
 /**
