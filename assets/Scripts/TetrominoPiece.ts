@@ -1,6 +1,7 @@
 import { _decorator, Component, EventTouch, Node, Size, Sprite, SpriteFrame, UITransform, v3, Vec2, Vec3 } from 'cc';
 import { PuzzleGameManager } from './PuzzleGameManager';
-import { PieceBlock } from './PieceBlock';
+import { EPieceBlockType, PieceBlock } from './PieceBlock';
+import { AudioManager, ENUM_AUDIO_CLIP } from './AudioManager';
 const { ccclass, property } = _decorator;
 
 export class TetrominoData {
@@ -56,6 +57,7 @@ export class TetrominoPiece extends Component {
     }
 
     public onMoveStart(event: EventTouch): void {
+        AudioManager.instance.playSfx(ENUM_AUDIO_CLIP.PICK_UP)
         this.node.worldScale = Vec3.ONE;
 
         let screenPos = event.getUILocation();
@@ -95,13 +97,10 @@ export class TetrominoPiece extends Component {
             let {attached,clearedLine} = PuzzleGameManager.instance.puzzleGrid.attachBlocksFromPiece(this, cell);
             if (attached)
             {
+                AudioManager.instance.playSfx(ENUM_AUDIO_CLIP.PUT_DOWN);
                 this.node.active = false;
                 PuzzleGameManager.instance.onPlayerPlayedAPiece();
             }
-        }
-        else
-        {
-
         }
 
         this.node.position = Vec3.ZERO;
@@ -118,19 +117,20 @@ export class TetrominoPiece extends Component {
         this.refreshPreviews();
     }
 
-    randomizeSprite(sprite: SpriteFrame) {
+    setSprite(sprite: SpriteFrame) {
         this._representation = sprite;
     }
 
     private refreshPieceBlocks()
     {
         this.blockMap = new Map<number, PieceBlock>();
+        
         for (let y = 0; y < TetrominoData.getSize(this._data)[1]; ++y)
         {
             for (let x = 0; x < TetrominoData.getSize(this._data)[0]; ++x)
             {
                 let i = this.convertToIndex(x, y);
-                if (TetrominoData.getData(this._data)[i] === 0)
+                if (TetrominoData.getData(this._data)[i] == 0)
                 {
                     continue;
                 }
@@ -139,8 +139,8 @@ export class TetrominoPiece extends Component {
 
                 let block = this._allBlocks[this._allBlocks.length-1];
                 block.sprite.spriteFrame = this._representation;
-                // block.currentSprite = this._representation;
-                block.node.getComponent(PieceBlock).holder = this.node;
+                block.type = TetrominoData.getData(this._data)[i];
+                block.holder = this.node;
                 block.node.parent = this.blockHost;
                 
                 block.node.position = this.getPositionOfCoord(x, y);

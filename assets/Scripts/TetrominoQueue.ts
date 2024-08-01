@@ -2,7 +2,6 @@ import { _decorator, CCFloat, Component, Node, Size, SpriteFrame, UITransform } 
 import randomItem from 'random-item';
 import { TetrominoData, TetrominoPiece } from './TetrominoPiece';
 import { PuzzleGameManager, PuzzleGameState } from './PuzzleGameManager';
-import { delay } from './Utilities';
 const { ccclass, property } = _decorator;
 
 
@@ -33,17 +32,14 @@ export class TetrominoQueue extends Component {
     }
 
     
-    public async refreshAllPieces()
+    public refreshAllPieces()
     {
         let piecesToSet = PuzzleGameManager.instance.dataSource.getNextEndlessData()
-        console.log(piecesToSet);
-        
         for (let i = 0; i < this.piece.length; ++i)
         {
             this.refreshPiece(i, PuzzleGameManager.instance.dataSource.PredefinedTetrominoPieces[piecesToSet[i]]);
         }
         if (!PuzzleGameManager.instance.checkGridCanStillPlay()) {
-            await delay(2);
             PuzzleGameManager.instance.setState(PuzzleGameState.GAME_OVER)
         };
     }
@@ -52,7 +48,7 @@ export class TetrominoQueue extends Component {
     {
         let piece = this.piece[i];
         piece.resetPosition();
-        piece.randomizeSprite(randomItem(this.spriteFrameList));
+        piece.setSprite(randomItem(this.spriteFrameList));
         piece.setData(data);
         piece.node.active = true;
     }

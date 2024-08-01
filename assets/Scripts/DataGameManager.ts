@@ -8,6 +8,7 @@ export class DataGameManager {
 
     public endlessDataLoaded: string[][] = [];
     private _indexEndless: number = 0;
+    
     public PredefinedTetrominoPieces: Record<string, TetrominoData> = {};
 
     public constructor(block: any, endlessData: JsonAsset) {

@@ -4,8 +4,8 @@ import { PuzzleGrid } from './PuzzleGrid';
 import { TetrominoQueue } from './TetrominoQueue';
 import { PieceBlock } from './PieceBlock';
 import { GameUI } from './UI/GameUI';
-import { delay } from './Utilities';
 import { DataGameManager } from './DataGameManager';
+import { AudioManager, ENUM_AUDIO_CLIP } from './AudioManager';
 const { ccclass, property } = _decorator;
 export enum PuzzleGameState
 {
@@ -17,6 +17,12 @@ export enum PuzzleGameState
     GAME_OVER,              // The game is over
     CONCLUDE_GAME           // The player concludes the game, by choosing restart or quit.
 }
+
+export enum GAME_MODE {
+    ENDLESS,
+    TIME,
+}
+
 @ccclass('PuzzleGameManager')
 export class PuzzleGameManager extends Component {
     private static _instance: PuzzleGameManager;
@@ -37,6 +43,7 @@ export class PuzzleGameManager extends Component {
     @property(JsonAsset) public EndlessDataJson: JsonAsset = null;
 
     public dataSource: DataGameManager;
+    public gameMode : GAME_MODE = GAME_MODE.ENDLESS;
 
     private _state: PuzzleGameState;
     private _score: number = 0;
@@ -78,34 +85,33 @@ export class PuzzleGameManager extends Component {
                 this.setState(PuzzleGameState.START_GAME);
             }
             else if(newState == PuzzleGameState.START_GAME){
-                this.puzzleGrid.clear();
+                AudioManager.instance.playBGM();
                 this.puzzleGrid.activate();
                 this.tetrominoQueue.refreshAllPieces();
                 this.setState(PuzzleGameState.IN_GAME);
             }
             else if(newState == PuzzleGameState.IN_GAME){
-                this.gameUI.onGameStart();
                 this.playerControl.setControlMode(ControlMode.NORMAL);
             }
             else if(newState == PuzzleGameState.PAUSE_GAME){
 
             }
             else if(newState == PuzzleGameState.GAME_OVER){
-                this.gameUI.onGameOver();
+                this.confirmGameEnd();
             }
             else if(newState == PuzzleGameState.CONCLUDE_GAME){
-                
+                this.gameUI.showGameOverPanel();                
             }
         }
     }
 
-    async onPlayerPlayedAPiece() {
+    onPlayerPlayedAPiece() {
         if (this.tetrominoQueue.shouldBeRefreshed()) {
             setTimeout(() => this.tetrominoQueue.refreshAllPieces(), 200);
         }
         else {
             if (!this.checkGridCanStillPlay()) {
-                await delay(2);
+                //await delay(2);
                 this.setState(PuzzleGameState.GAME_OVER)
             };
         }
@@ -121,10 +127,16 @@ export class PuzzleGameManager extends Component {
 
     addScore(value: number) {
         if(this._state == PuzzleGameState.IN_GAME){
+            AudioManager.instance.playSfx(ENUM_AUDIO_CLIP.SCORE);
             this._score += value;
-            
             this.gameUI.setScore(Math.floor(this._score));
         }
+    }
+
+    confirmGameEnd(){
+        this.playerControl.setControlMode(ControlMode.DISABLED);
+        AudioManager.instance.playSfx(ENUM_AUDIO_CLIP.END_GAME);
+        this.setState(PuzzleGameState.CONCLUDE_GAME);
     }
 
 }

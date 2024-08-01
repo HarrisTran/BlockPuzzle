@@ -6,11 +6,6 @@ const { ccclass, property } = _decorator;
 export class PuzzleGridCell extends Component {
     public gridIndex: number;
     public attachedBlock: PieceBlock;
-
-    public debugColorize()
-    {
-        this.getComponentInChildren(Sprite).color = Color.RED;
-    }
 }
 
 

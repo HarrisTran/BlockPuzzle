@@ -167,7 +167,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "726f0d0a-a1bc-48ab-9ddb-4a2fffcf9a91@c30fb",
+      "__uuid__": "90d2dbcb-862a-447f-910a-45b679ed7a69@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -182,10 +182,7 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_useGrayscale": false,
-    "_atlas": {
-      "__uuid__": "726f0d0a-a1bc-48ab-9ddb-4a2fffcf9a91",
-      "__expectedType__": "cc.SpriteAtlas"
-    },
+    "_atlas": null,
     "_id": ""
   },
   {
@@ -284,8 +281,16 @@
     "sprite": {
       "__id__": 5
     },
-    "spriteFrame": {
-      "__uuid__": "726f0d0a-a1bc-48ab-9ddb-4a2fffcf9a91@c30fb",
+    "pieceBlock0": {
+      "__uuid__": "7c6629f1-761d-46ce-8c83-0ff7a4f6e617@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
+    "pieceBlock1": {
+      "__uuid__": "924aab60-ccec-4e02-8faa-646f2539f3dc@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
+    "pieceBlock2": {
+      "__uuid__": "be9d3d21-170b-496d-b665-6a6ba9dbf443@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_id": ""

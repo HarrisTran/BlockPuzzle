@@ -50,13 +50,6 @@ export class PuzzleGrid extends Component {
         this._gridPixelSize = minimumGridSize;
     }
 
-    public clear() {
-        // for (let i = 0; i < this._allBlocks.length; ++i) {
-        //     if (this._allBlocks[i] != null) {
-        //         this._allBlocks[i].returnToPool();
-        //     }
-        // }
-    }
 
     public activate() {
         this._allCells = new Array<PuzzleGridCell>(this.gridSize ** 2);
