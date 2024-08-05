@@ -166,5 +166,177 @@
 	"polyomino_42": {
 		"id": "polyomino_42",
 		"grid": { "size": [3, 3], "data": [1, 0, 0, 1, 1, 1, 0, 0, 1] }
+	},
+	"polyomino_43": {
+		"id": "polyomino_43",
+		"grid": { "size": [3, 3], "data": [1, 0, 0, 1, 1, 1, 0, 0, 2] }
+	},
+	"polyomino_101": {
+		"id": "polyomino_101",
+		"grid": { "size": [1, 1], "data": [2] }
+	},
+	"polyomino_102": {
+		"id": "polyomino_102",
+		"grid": { "size": [2, 1], "data": [1, 2] }
+	},
+	"polyomino_103": {
+		"id": "polyomino_103",
+		"grid": { "size": [1, 2], "data": [2, 1] }
+	},
+	"polyomino_104": {
+		"id": "polyomino_104",
+		"grid": { "size": [2, 2], "data": [1, 1, 2, 0] }
+	},
+	"polyomino_105": {
+		"id": "polyomino_105",
+		"grid": { "size": [2, 2], "data": [0, 1, 1, 2] }
+	},
+	"polyomino_106": {
+		"id": "polyomino_106",
+		"grid": { "size": [2, 2], "data": [1, 1, 0, 2] }
+	},
+	"polyomino_107": {
+		"id": "polyomino_107",
+		"grid": { "size": [2, 2], "data": [1, 0, 2, 1] }
+	},
+	"polyomino_108": {
+		"id": "polyomino_108",
+		"grid": { "size": [3, 1], "data": [1, 1, 2] }
+	},
+	"polyomino_109": {
+		"id": "polyomino_109",
+		"grid": { "size": [1, 3], "data": [1, 1, 2] }
+	},
+	"polyomino_110": {
+		"id": "polyomino_110",
+		"grid": { "size": [2, 2], "data": [1, 1, 1, 2] }
+	},
+	"polyomino_111": {
+		"id": "polyomino_111",
+		"grid": { "size": [1, 4], "data": [1, 1, 1, 2] }
+	},
+	"polyomino_112": {
+		"id": "polyomino_112",
+		"grid": { "size": [4, 1], "data": [1, 1, 1, 2] }
+	},
+	"polyomino_113": {
+		"id": "polyomino_113",
+		"grid": { "size": [2, 3], "data": [1, 1, 1, 0, 2, 0] }
+	},
+	"polyomino_114": {
+		"id": "polyomino_114",
+		"grid": { "size": [2, 3], "data": [1, 0, 1, 2, 1, 0] }
+	},
+	"polyomino_115": {
+		"id": "polyomino_115",
+		"grid": { "size": [2, 3], "data": [1, 0, 1, 0, 1, 2] }
+	},
+	"polyomino_116": {
+		"id": "polyomino_116",
+		"grid": { "size": [2, 3], "data": [1, 2, 0, 1, 0, 1] }
+	},
+	"polyomino_117": {
+		"id": "polyomino_117",
+		"grid": { "size": [2, 3], "data": [0, 1, 1, 2, 0, 1] }
+	},
+	"polyomino_118": {
+		"id": "polyomino_118",
+		"grid": { "size": [2, 3], "data": [0, 1, 0, 1, 1, 2] }
+	},
+	"polyomino_119": {
+		"id": "polyomino_119",
+		"grid": { "size": [2, 3], "data": [0, 1, 1, 2, 1, 0] }
+	},
+	"polyomino_120": {
+		"id": "polyomino_120",
+		"grid": { "size": [2, 3], "data": [1, 0, 1, 1, 0, 2] }
+	},
+	"polyomino_121": {
+		"id": "polyomino_121",
+		"grid": { "size": [3, 2], "data": [1, 1, 2, 1, 0, 0] }
+	},
+	"polyomino_122": {
+		"id": "polyomino_122",
+		"grid": { "size": [3, 2], "data": [1, 2, 1, 0, 1, 0] }
+	},
+	"polyomino_123": {
+		"id": "polyomino_123",
+		"grid": { "size": [3, 2], "data": [1, 1, 1, 0, 0, 2] }
+	},
+	"polyomino_124": {
+		"id": "polyomino_124",
+		"grid": { "size": [3, 2], "data": [1, 0, 0, 2, 1, 1] }
+	},
+	"polyomino_125": {
+		"id": "polyomino_125",
+		"grid": { "size": [3, 2], "data": [0, 1, 0, 1, 1, 2] }
+	},
+	"polyomino_126": {
+		"id": "polyomino_126",
+		"grid": { "size": [3, 2], "data": [0, 0, 1, 1, 1, 2] }
+	},
+	"polyomino_127": {
+		"id": "polyomino_127",
+		"grid": { "size": [3, 2], "data": [1, 1, 0, 0, 2, 1] }
+	},
+	"polyomino_128": {
+		"id": "polyomino_128",
+		"grid": { "size": [3, 2], "data": [0, 1, 2, 1, 1, 0] }
+	},
+	"polyomino_129": {
+		"id": "polyomino_129",
+		"grid": { "size": [3, 3], "data": [1, 1, 2, 1, 0, 0, 1, 0, 0] }
+	},
+	"polyomino_130": {
+		"id": "polyomino_130",
+		"grid": { "size": [3, 3], "data": [1, 1, 2, 0, 0, 1, 0, 0, 1] }
+	},
+	"polyomino_131": {
+		"id": "polyomino_131",
+		"grid": { "size": [3, 3], "data": [0, 0, 1, 0, 0, 1, 1, 1, 2] }
+	},
+	"polyomino_132": {
+		"id": "polyomino_132",
+		"grid": { "size": [3, 3], "data": [1, 0, 0, 1, 0, 0, 1, 1, 2] }
+	},
+	"polyomino_133": {
+		"id": "polyomino_133",
+		"grid": { "size": [3, 3], "data": [1, 1, 1, 1, 2, 1, 1, 1, 1] }
+	},
+	"polyomino_134": {
+		"id": "polyomino_134",
+		"grid": { "size": [3, 3], "data": [1, 1, 10, 2, 0, 0, 1, 0] }
+	},
+	"polyomino_135": {
+		"id": "polyomino_135",
+		"grid": { "size": [3, 3], "data": [0, 1, 0, 1, 2, 1, 0, 1, 0] }
+	},
+	"polyomino_136": {
+		"id": "polyomino_136",
+		"grid": { "size": [3, 3], "data": [0, 1, 0, 0, 1, 0, 1, 2, 1] }
+	},
+	"polyomino_137": {
+		"id": "polyomino_137",
+		"grid": { "size": [3, 3], "data": [1, 0, 0, 1, 2, 1, 1, 0, 0] }
+	},
+	"polyomino_138": {
+		"id": "polyomino_138",
+		"grid": { "size": [3, 3], "data": [0, 0, 1, 1, 1, 2, 0, 0, 1] }
+	},
+	"polyomino_139": {
+		"id": "polyomino_139",
+		"grid": { "size": [3, 3], "data": [1, 1, 0, 0, 2, 0, 0, 1, 1] }
+	},
+	"polyomino_140": {
+		"id": "polyomino_140",
+		"grid": { "size": [3, 3], "data": [0, 1, 1, 0, 2, 0, 1, 1, 0] }
+	},
+	"polyomino_141": {
+		"id": "polyomino_141",
+		"grid": { "size": [3, 3], "data": [0, 0, 1, 1, 1, 2, 1, 0, 0] }
+	},
+	"polyomino_142": {
+		"id": "polyomino_142",
+		"grid": { "size": [3, 3], "data": [1, 0, 0, 1, 1, 1, 0, 0, 2] }
 	}
 }

@@ -282,15 +282,7 @@
       "__id__": 5
     },
     "pieceBlock0": {
-      "__uuid__": "7c6629f1-761d-46ce-8c83-0ff7a4f6e617@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "pieceBlock1": {
-      "__uuid__": "924aab60-ccec-4e02-8faa-646f2539f3dc@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "pieceBlock2": {
-      "__uuid__": "be9d3d21-170b-496d-b665-6a6ba9dbf443@f9941",
+      "__uuid__": "e20a8c68-4f02-42e1-9772-c728a1d1c011@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_id": ""

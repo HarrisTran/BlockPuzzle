@@ -132,6 +132,7 @@ export class PuzzleGrid extends Component {
 
         PuzzleGameManager.instance.addScore(blockBroke.size);
 
+
         for (let i of blockBroke){
             let pos = this.toCoord(i);
             this.removeBlock(pos.x, pos.y);

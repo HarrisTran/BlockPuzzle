@@ -39,8 +39,13 @@ export class PuzzleGameManager extends Component {
     @property(PuzzleGrid) public puzzleGrid: PuzzleGrid = null;
     @property(TetrominoQueue) public tetrominoQueue: TetrominoQueue = null;
     @property(Prefab) public pieceBlock: Prefab = null;
-    @property(JsonAsset) public BlockDataJson: JsonAsset = null;
-    @property(JsonAsset) public EndlessDataJson: JsonAsset = null;
+
+    @property({ group: { name: "Json Data", id: "1", displayOrder: 1 }, type: JsonAsset })
+    public BlockDataJson: JsonAsset = null;
+    @property({ group: { name: "Json Data", id: "1", displayOrder: 1 }, type: JsonAsset })
+    public EndlessDataJson: JsonAsset = null;
+    @property({ group: { name: "Json Data", id: "1", displayOrder: 1 }, type: JsonAsset })
+    public ComboDataJson: JsonAsset = null;
 
     public dataSource: DataGameManager;
     public gameMode : GAME_MODE = GAME_MODE.ENDLESS;
@@ -60,7 +65,7 @@ export class PuzzleGameManager extends Component {
     // public pieceNodePool : NodePool;
 
     protected onLoad(): void {
-        this.dataSource = new DataGameManager(this.BlockDataJson,this.EndlessDataJson);
+        this.dataSource = new DataGameManager(this.BlockDataJson,this.EndlessDataJson, this.ComboDataJson);
         PuzzleGameManager._instance = this;
         this._state = PuzzleGameState.NONE;
     }
@@ -130,6 +135,14 @@ export class PuzzleGameManager extends Component {
             AudioManager.instance.playSfx(ENUM_AUDIO_CLIP.SCORE);
             this._score += value;
             this.gameUI.setScore(Math.floor(this._score));
+        }
+    }
+
+    addBonus(value: any) {
+        if(this._state == PuzzleGameState.IN_GAME){
+            this._score += value.bonus;
+            this.gameUI.setScore(Math.floor(this._score));
+            this.gameUI.updateTaskProgress(value.percent)
         }
     }
 

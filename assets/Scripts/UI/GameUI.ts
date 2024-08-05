@@ -1,4 +1,4 @@
-import { _decorator, Component, director, Label, Node } from 'cc';
+import { _decorator, Component, director, Label, Node, Sprite } from 'cc';
 import { TimeMode } from './TimeMode';
 import { delay } from '../Utilities';
 const { ccclass, property } = _decorator;
@@ -9,6 +9,7 @@ export class GameUI extends Component {
     @property(Node) gameMenuPanel: Node =  null;
     @property(TimeMode) timeModePanel: TimeMode = null;
     @property(Label) scoreText: Label = null;
+    @property(Sprite) taskProgress: Sprite = null;
 
     onClickEndlessMode(){
         this.timeModePanel.node.active = false;
@@ -22,6 +23,10 @@ export class GameUI extends Component {
 
     enterGame(){
         this.gameMenuPanel.active = false;
+    }
+
+    public updateTaskProgress(progress: number){
+        this.taskProgress.fillRange = progress;
     }
 
 
