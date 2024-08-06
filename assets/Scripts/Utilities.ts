@@ -1,5 +1,5 @@
 
-import { _decorator, Node, UITransform, Vec2, Vec3 } from 'cc';
+import { _decorator, Node, ParticleSystem, UITransform, Vec2, Vec3 } from 'cc';
 export class Bound {
     xMin: number;
     xMax: number;
@@ -60,11 +60,17 @@ export function isBetween(value: number, bound1: number, bound2: number): boolea
     return Math.min(bound1, bound2) <= value && value <= Math.max(bound1, bound2);
 }
 
-export function delay(delay: number){
-    return new Promise((resolve) => setTimeout(resolve, delay*1000));
+export function delay(delay: number) {
+    return new Promise((resolve) => setTimeout(resolve, delay * 1000));
 }
 
 export function randomInList<T>(list: T[]) {
     if (list.length === 1) return list[0];
     return list[Math.floor(Math.random() * list.length)];
-  }
+}
+
+export function playParticle(parent: ParticleSystem){
+    parent.node.walk((target: Node) => {
+        target.getComponent(ParticleSystem).play();
+    })
+}

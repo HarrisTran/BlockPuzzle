@@ -1,15 +1,21 @@
-import { _decorator, Component, director, Label, Node, Sprite } from 'cc';
+import { _decorator, Animation, Component, director, Label, Node, Sprite } from 'cc';
 import { TimeMode } from './TimeMode';
 import { delay } from '../Utilities';
+import { GameOverPanel } from './GameOverPanel';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameUI')
 export class GameUI extends Component {
-    @property(Node) gameOverPanel: Node = null;
+    @property(GameOverPanel) gameOverPanel: GameOverPanel = null;
     @property(Node) gameMenuPanel: Node =  null;
     @property(TimeMode) timeModePanel: TimeMode = null;
     @property(Label) scoreText: Label = null;
     @property(Sprite) taskProgress: Sprite = null;
+    @property(Animation) progressBarAnimation: Animation = null;
+
+    protected start(): void {
+        this.gameMenuPanel.active = true;
+    }
 
     onClickEndlessMode(){
         this.timeModePanel.node.active = false;
@@ -27,6 +33,7 @@ export class GameUI extends Component {
 
     public updateTaskProgress(progress: number){
         this.taskProgress.fillRange = progress;
+        this.progressBarAnimation.play();
     }
 
 
@@ -34,9 +41,8 @@ export class GameUI extends Component {
         director.loadScene("PuzzleGame");
     }
 
-    public async showGameOverPanel() {
-        await delay(1)
-        this.gameOverPanel.active = true;
+    public showGameOverPanel() {
+        this.gameOverPanel.node.active = true;
     }
 
     setScore(score: number) {
