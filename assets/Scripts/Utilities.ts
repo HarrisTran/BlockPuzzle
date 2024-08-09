@@ -69,8 +69,17 @@ export function randomInList<T>(list: T[]) {
     return list[Math.floor(Math.random() * list.length)];
 }
 
-export function playParticle(parent: ParticleSystem){
-    parent.node.walk((target: Node) => {
-        target.getComponent(ParticleSystem).play();
-    })
+
+export function bezierTangent(p0: Vec3, p1: Vec3, p2: Vec3, t: number) {
+    let p: Vec3 = new Vec3(0);
+    p.x = (1 - t) * (1 - t) * p0.x + 2 * (1 - t) * t * p1.x + t * t * p2.x;
+    p.y = (1 - t) * (1 - t) * p0.y + 2 * (1 - t) * t * p1.y + t * t * p2.y;
+    return p;
+}
+
+export function randomControlPoints(p0: Vec3, p1: Vec3, range: number): Vec3 {
+    let midPoint = new Vec3(p0.x + (p1.x - p0.x) / 3, p0.y + (p1.y - p0.y) / 3, 0);
+    let randomX = Math.random() * 2 * range - range;
+    let randomY = Math.random() * 2 * range - range;
+    return midPoint.add(new Vec3(randomX, randomY, 0));
 }

@@ -23,6 +23,10 @@ export enum GAME_MODE {
     TIME,
 }
 
+export enum GAME_EVENT {
+    PLAY_STAR_EFFECT = "PlayStarEffect",
+}
+
 @ccclass('PuzzleGameManager')
 export class PuzzleGameManager extends Component {
     private static _instance: PuzzleGameManager;
@@ -48,7 +52,7 @@ export class PuzzleGameManager extends Component {
     public ComboDataJson: JsonAsset = null;
 
     public dataSource: DataGameManager;
-    public gameMode : GAME_MODE = GAME_MODE.ENDLESS;
+    private gameMode : GAME_MODE = GAME_MODE.ENDLESS;
 
     private _state: PuzzleGameState;
     private _score: number = 0;
@@ -62,9 +66,9 @@ export class PuzzleGameManager extends Component {
         return this._currentLevel;
     }
 
-    // public pieceNodePool : NodePool;
 
     protected onLoad(): void {
+        game.on(GAME_EVENT.PLAY_STAR_EFFECT,this.onPlayStarEffect.bind(this),this);
         this.dataSource = new DataGameManager(this.BlockDataJson,this.EndlessDataJson, this.ComboDataJson);
         PuzzleGameManager._instance = this;
         this._state = PuzzleGameState.NONE;
@@ -81,13 +85,11 @@ export class PuzzleGameManager extends Component {
     public setState(newState: PuzzleGameState){
         if(this._state != newState){
             this._state = newState;
-            console.log("Puzzle Game State requested switched to " + PuzzleGameState[newState]);
+            this.gameUI.setStateUI(this._state);
             if(newState == PuzzleGameState.INIT){
                 this.puzzleGrid.calculateGridToFitScreenSize(this.canvas.node.getComponent(UITransform).width);
-                // this.pieceNodePool = new NodePool();
                 this.tetrominoQueue.initialize(this.puzzleGrid.cellPixelSize);
                 this.playerControl.initialize();
-                this.setState(PuzzleGameState.START_GAME);
             }
             else if(newState == PuzzleGameState.START_GAME){
                 AudioManager.instance.playBGM();
@@ -116,7 +118,6 @@ export class PuzzleGameManager extends Component {
         }
         else {
             if (!this.checkGridCanStillPlay()) {
-                //await delay(2);
                 this.setState(PuzzleGameState.GAME_OVER)
             };
         }
@@ -138,18 +139,35 @@ export class PuzzleGameManager extends Component {
         }
     }
 
-    addBonus(value: any) {
-        if(this._state == PuzzleGameState.IN_GAME){
-            this._score += value.bonus;
-            this.gameUI.setScore(Math.floor(this._score));
-            this.gameUI.updateTaskProgress(value.percent)
-        }
+    addBonus() {
+        // let value = this.dataSource.updateTaskProgress
+        // if(this._state == PuzzleGameState.IN_GAME && value > 0){
+        //     this.addScore(value)
+        //     this.gameUI.updateTaskProgress(value.percent)
+        // }
     }
 
     confirmGameEnd(){
         this.playerControl.setControlMode(ControlMode.DISABLED);
         AudioManager.instance.playSfx(ENUM_AUDIO_CLIP.END_GAME);
         this.setState(PuzzleGameState.CONCLUDE_GAME);
+    }
+
+    onClickEndlessMode() {
+        this.gameMode = GAME_MODE.ENDLESS;
+        this.gameUI.setMode(this.gameMode);
+        this.setState(PuzzleGameState.START_GAME);
+    }
+
+    onClickTimeMode() {
+        this.gameMode = GAME_MODE.TIME;
+        this.gameUI.setMode(this.gameMode);
+        this.setState(PuzzleGameState.START_GAME);
+    }
+
+    onPlayStarEffect(data: any){
+        let {position} = data;
+        this.gameUI.playStarEffect(position);
     }
 
 }

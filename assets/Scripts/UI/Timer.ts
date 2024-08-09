@@ -2,12 +2,11 @@ import { _decorator, Component, Label, Node } from 'cc';
 import { PuzzleGameManager } from '../PuzzleGameManager';
 const { ccclass, property } = _decorator;
 
-@ccclass('TimeMode')
-export class TimeMode extends Component {
+@ccclass('Timer')
+export class Timer extends Component {
     @property(Label)
     private timerText : Label = null;
 
-    private _totalTime: number ;
     private _isActived: boolean = false;
     private _timeLeft: number;
 
@@ -21,12 +20,15 @@ export class TimeMode extends Component {
         }
     }
 
-    public startScreen(time: number)
+    public init(time: number)
     {
         this.node.active = true;
-        this._totalTime = time;
         this._timeLeft = time;
         this._isActived = true;
+    }
+
+    public deactive(){
+        this.node.active = false;
     }
 
     private onTimerReachedZero()
