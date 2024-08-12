@@ -46,11 +46,10 @@ export class PieceBlock extends Component {
             .to(0.3, { scale: new Vec3(0) }, {
                 easing: "cubicIn", onComplete: () => {
                     if (this.type == EPieceBlockType.SPECIAL_0) {
-                        // PuzzleGameManager.instance.addBonus(getBonus);
-                        // PuzzleGameManager.instance.addBonus();
                         PuzzleGameManager.instance.dataSource.updateTaskProgress(this.type.toString());
                         game.emit(GAME_EVENT.PLAY_STAR_EFFECT, {
-                            position: this.node.worldPosition
+                            position: this.node.worldPosition,
+                            progress: PuzzleGameManager.instance.dataSource.getStepProgress()
                         })
                     }
                     this.node.destroy();

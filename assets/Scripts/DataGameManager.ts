@@ -1,8 +1,9 @@
 import { JsonAsset } from "cc";
 import { randomInList } from "./Utilities";
 import { TetrominoData } from "./TetrominoPiece";
+import { PuzzleGameManager } from "./PuzzleGameManager";
 
-type Task = {[key: string] : {progress: number, total: number}};
+type Task = { [key: string]: { progress: number, total: number } };
 
 interface Step {
     id: string;
@@ -12,43 +13,43 @@ interface Step {
 
 class TaskManager {
     private steps: Step[];
-    private currentStepIndex : number;
+    private currentStepIndex: number;
 
     constructor(steps: Step[]) {
         this.steps = steps;
         this.currentStepIndex = 0;
-        console.log(this.getProgressCurrentStep());
-        
     }
 
-    public getCurrentStep() : Step {
+    public getCurrentStep(): Step {
         return this.steps[this.currentStepIndex];
     }
 
-    private areAllTasksCompleted() : boolean {
-        return this.steps[this.currentStepIndex].tasks.every(task => task.progress >= task.total);
+    private areAllTasksCompleted(): boolean {
+        return this.getCurrentStep().tasks.every(task => {
+            const [taskId] = Object.keys(task);
+            const taskData = task[taskId];
+            return taskData.progress >= taskData.total;
+        });
     }
 
     public completeTask(taskId: string, progress: number) {
-        let reward : number = 0;
         let step = this.getCurrentStep();
-        if(step){
-            let task = step.tasks[taskId];
-            if(task) {
-                task[taskId] += progress;
-                if(this.areAllTasksCompleted()) {
-                    reward = step.reward;
+
+        if (step) {
+            let task = step.tasks.find(task => Object.keys(task)[0] === taskId);
+            if (task) {
+                task[taskId].progress += progress;
+                if (this.areAllTasksCompleted()) {
+                    PuzzleGameManager.instance.taskProgressReachedToMax();
                     this.movetoNextStep();
-                    return reward;
                 }
             }
         }
-        return reward;
     }
 
-    public getProgressCurrentStep() : number {
+    public getProgressCurrentStep(): number {
         let step = this.getCurrentStep();
-        if(step) {
+        if (step) {
             let current = 0;
             let total = 0;
             step.tasks.map(task => {
@@ -56,15 +57,14 @@ class TaskManager {
                 current = key.reduce((a, b) => a + task[b].progress, 0);
                 total = key.reduce((a, b) => a + task[b].total, 0);
             });
-            console.log(current+"/"+total);
             return current / total;
         }
         return 0;
     }
 
     movetoNextStep() {
-        this.currentStepIndex ++;
-        if(this.currentStepIndex >= this.steps.length) {
+        this.currentStepIndex++;
+        if (this.currentStepIndex >= this.steps.length) {
             this.currentStepIndex = 0;
         }
     }
@@ -82,7 +82,7 @@ export class DataGameManager {
     public taskManager: TaskManager;
 
     public constructor(block: any, endlessData: any, comboData: any) {
-        
+
         this.endlessDataLoaded = endlessData.json as string[][];
         // Defined Tetrominoes Data
         for (let key in block.json) {
@@ -96,21 +96,21 @@ export class DataGameManager {
             }
         }
 
-        let steps : Step[] = [];
+        let steps: Step[] = [];
         for (let data in comboData.json) {
             let id = data;
-            let tasks : Task[] = [];
-            for(let x of comboData.json[data].Condition){
+            let tasks: Task[] = [];
+            for (let x of comboData.json[data].Condition) {
                 tasks.push({
-                    [x.id]: {progress: 0, total: x.count}
+                    [x.id]: { progress: 0, total: x.count }
                 });
             }
             let reward = comboData.json[data].Reward;
-            steps.push({id, tasks, reward});
+            steps.push({ id, tasks, reward });
         }
         this.taskManager = new TaskManager(steps);
 
-        
+
     }
 
     public getNextEndlessData(): string[] {
@@ -125,39 +125,27 @@ export class DataGameManager {
         return extracted;
     }
 
-    // private evaluateStepIsCompleted() {
-    //     // let headComboCondition = this.ComboRepository[0].Condition;
-    //     // let currentProgress = headComboCondition.reduce((a, b) => a + b[1], 0);
-    //     // let percent = 1 - currentProgress / this.ComboRepository[0].Total;
 
-    //     // if(percent >= 1){
-    //     //     let nextCombo = this.ComboRepository.shift();
-    //     //     this.ComboRepository.push(nextCombo);
-            
-    //     //     return {
-    //     //         percent: 1,
-    //     //         bonus: nextCombo.Reward
-    //     //     }
-    //     // }
-    //     // else{
-    //     //     console.log(this.ComboRepository);
-    //     //     return {
-    //     //         percent: percent,
-    //     //         bonus: 0
-    //     //     }
-    //     // }
-    //     this.taskManager.
-    // }
 
-    
-    /**
-     * Updates the progress of a task with the given ID.
-     *
-     * @param {string} id - The ID of the task to update.
-     * @return {number} The reward earned for completing the task, or 0 if the task was not completed.
-     */
-    public updateTaskProgress(id: string): number {
-        return this.taskManager.completeTask(id, 1);
+    public updateTaskProgress(id: string){
+        this.taskManager.completeTask(id, 1);
+    }
+
+    public getStepProgress(): number {
+        let step = this.taskManager.getCurrentStep();
+        const totalProgress = step.tasks.reduce((acc, task) => {
+            const [taskId] = Object.keys(task);
+            const taskData = task[taskId];
+            return acc + taskData.progress/taskData.total;
+        }, 0);
+
+        const totalTasks = step.tasks.length;
+
+        return totalProgress/totalTasks;
+    }
+
+    public getRewardScoreCurrentStep(){
+        return this.taskManager.getCurrentStep().reward;
     }
 
 

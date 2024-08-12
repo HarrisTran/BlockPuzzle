@@ -1,7 +1,7 @@
 import { _decorator, Animation, Component, director, Graphics, instantiate, Label, Node, Prefab, ProgressBar, Sprite, tween, Vec3, Widget } from 'cc';
 import { bezierTangent, delay, randomControlPoints } from '../Utilities';
 import { GameOverPanel } from './GameOverPanel';
-import { GAME_MODE, PuzzleGameState } from '../PuzzleGameManager';
+import { GAME_MODE, PuzzleGameManager, PuzzleGameState } from '../PuzzleGameManager';
 import { Timer } from './Timer';
 const { ccclass, property } = _decorator;
 
@@ -72,15 +72,13 @@ export class GameUI extends Component {
     public updateTaskProgress(progress: number) {
         this.taskProgress.progress = progress;
         this.targetProgress.updateAlignment();
-        if (progress >= 1) {
-            this.taskProgressReachedToMax();
-        }
+        // if (progress >= 1) {
+        //     console.log("progress reached to max");
+        //     this.taskProgressReachedToMax();
+        // }
     }
 
 
-    public onClickRetry() {
-        director.loadScene("PuzzleGame");
-    }
 
     public showGameOverPanel() {
         this.scheduleOnce(() => {
@@ -116,10 +114,6 @@ export class GameUI extends Component {
                 }
             })
             .start();
-    }
-
-    private taskProgressReachedToMax(){
-        this.scoreFloatingUp.getComponent(Animation).play();
     }
 }
 

@@ -1,4 +1,4 @@
-import { _decorator, Camera, Canvas, Component, game, instantiate, JsonAsset, Prefab, UITransform } from 'cc';
+import { _decorator, Camera, Canvas, Component, game, instantiate, JsonAsset, Animation, Label, Prefab, UITransform } from 'cc';
 import { ControlMode, PuzzlePlayerControl } from './PuzzlePlayerControl';
 import { PuzzleGrid } from './PuzzleGrid';
 import { TetrominoQueue } from './TetrominoQueue';
@@ -6,6 +6,7 @@ import { PieceBlock } from './PieceBlock';
 import { GameUI } from './UI/GameUI';
 import { DataGameManager } from './DataGameManager';
 import { AudioManager, ENUM_AUDIO_CLIP } from './AudioManager';
+import P4PSDK from './SDK';
 const { ccclass, property } = _decorator;
 export enum PuzzleGameState
 {
@@ -74,7 +75,7 @@ export class PuzzleGameManager extends Component {
         this._state = PuzzleGameState.NONE;
     }
 
-    protected start(): void {
+    protected async start(): Promise<void> {
         this.setState(PuzzleGameState.INIT);
     }
 
@@ -82,16 +83,20 @@ export class PuzzleGameManager extends Component {
         return instantiate(this.pieceBlock).getComponent(PieceBlock);
     }
 
-    public setState(newState: PuzzleGameState){
+    public async setState(newState: PuzzleGameState){
         if(this._state != newState){
             this._state = newState;
             this.gameUI.setStateUI(this._state);
             if(newState == PuzzleGameState.INIT){
+                await P4PSDK.init();
+
                 this.puzzleGrid.calculateGridToFitScreenSize(this.canvas.node.getComponent(UITransform).width);
                 this.tetrominoQueue.initialize(this.puzzleGrid.cellPixelSize);
                 this.playerControl.initialize();
             }
             else if(newState == PuzzleGameState.START_GAME){
+                await P4PSDK.startGame();
+
                 AudioManager.instance.playBGM();
                 this.puzzleGrid.activate();
                 this.tetrominoQueue.refreshAllPieces();
@@ -135,16 +140,9 @@ export class PuzzleGameManager extends Component {
         if(this._state == PuzzleGameState.IN_GAME){
             AudioManager.instance.playSfx(ENUM_AUDIO_CLIP.SCORE);
             this._score += value;
+            P4PSDK.updateScore(this._score);
             this.gameUI.setScore(Math.floor(this._score));
         }
-    }
-
-    addBonus() {
-        // let value = this.dataSource.updateTaskProgress
-        // if(this._state == PuzzleGameState.IN_GAME && value > 0){
-        //     this.addScore(value)
-        //     this.gameUI.updateTaskProgress(value.percent)
-        // }
     }
 
     confirmGameEnd(){
@@ -166,8 +164,16 @@ export class PuzzleGameManager extends Component {
     }
 
     onPlayStarEffect(data: any){
-        let {position} = data;
+        let {position, progress} = data;
         this.gameUI.playStarEffect(position);
+        this.gameUI.updateTaskProgress(progress);
+    }
+
+    public taskProgressReachedToMax(){
+        let value = PuzzleGameManager.instance.dataSource.getRewardScoreCurrentStep();
+        this.addScore(value);
+        this.gameUI.scoreFloatingUp.getComponent(Label).string = `${value}`;
+        this.gameUI.scoreFloatingUp.getComponent(Animation).play();
     }
 
 }
